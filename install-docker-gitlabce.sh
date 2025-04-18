@@ -1,4 +1,5 @@
 #!/bin/bash
+sudo systemctl stop haproxy.service
 
 echo "[INFO] 📁 Création des volumes persistants..."
 mkdir -p /srv/gitlab/config /srv/gitlab/logs /srv/gitlab/data
