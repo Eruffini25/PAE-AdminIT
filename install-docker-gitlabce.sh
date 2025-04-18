@@ -17,7 +17,7 @@ docker run --detach \
   --volume /srv/gitlab/data:/var/opt/gitlab \
   gitlab/gitlab-ce:latest
 
-echo "[INFO] ✅ GitLab CE lancé. Accès via : http://$IP_MACHINE:8080"
+echo "[INFO] ✅ GitLab CE lancé. Accès via : http://$IP_MACHINE"
 echo "[INFO] ⏳ Attente du fichier de mot de passe initial (max 60s)..."
 
 # Attente jusqu'à ce que le fichier soit dispo
