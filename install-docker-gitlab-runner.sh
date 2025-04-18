@@ -29,10 +29,8 @@ docker run --rm -it \
   --token "$TOKEN" \
   --executor "docker" \
   --docker-image "$IMAGE" \
-  --description "$DESCRIPTION" \
-  --tag-list "$TAGS" \
-  --run-untagged="true" \
-  --locked="false"
+  --description "$DESCRIPTION"
+
 
 echo "[INFO] ⏳ Attente de la création du fichier de configuration GitLab Runner..."
 
