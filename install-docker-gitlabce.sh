@@ -9,7 +9,7 @@ IP_MACHINE=$(hostname -I | awk '{print $1}')
 echo "[INFO] 🚀 Lancement de GitLab CE en Docker..."
 docker run --detach \
   --hostname $IP_MACHINE \
-  --publish 8080:80 --publish 444:443 --publish 2222:22 \
+  --publish 80:80 --publish 444:443 --publish 2222:22 \
   --name gitlab \
   --restart always \
   --volume /srv/gitlab/config:/etc/gitlab \
