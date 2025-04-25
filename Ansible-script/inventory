@@ -1,0 +1,16 @@
+[all:vars]
+# Ne pas toucher !
+ansible_user=adminit
+ansible_ssh_private_key_file=/home/adminit/.ssh/id_ed25519
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+
+[gitlabce]
+# ip machine gitlab
+10.0.1.152
+
+[gitlabce:vars]
+# hostname et ip voulu 
+new_hostname=SLTFR01-SFTP
+static_ip=10.0.1.20/24
+
+# Si erreur sudo "--ask-become-pass"

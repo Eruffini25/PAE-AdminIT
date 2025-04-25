@@ -1,0 +1,60 @@
+---
+- name: Deploiement de GitLab CE avec Docker
+  hosts: all
+  become: true
+  tasks:
+    - name: Arreter HAProxy s'il est actif
+      systemd:
+        name: haproxy
+        state: stopped
+        enabled: false
+      ignore_errors: true
+
+    - name: Creer les repertoires pour les volumes GitLab
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: '0755'
+      loop:
+        - /srv/gitlab/config
+        - /srv/gitlab/logs
+        - /srv/gitlab/data
+
+    - name: Obtenir l'adresse IP de la machine
+      command: hostname -I
+      register: ip_result
+
+    - name: Lancer le conteneur Docker GitLab CE
+      docker_container:
+        name: gitlab
+        image: gitlab/gitlab-ce:latest
+        state: started
+        restart_policy: always
+        hostname: "{{ ip_result.stdout.split()[0] }}"
+        published_ports:
+          - "80:80"
+          - "444:443"
+          - "2222:22"
+        volumes:
+          - /srv/gitlab/config:/etc/gitlab
+          - /srv/gitlab/logs:/var/log/gitlab
+          - /srv/gitlab/data:/var/opt/gitlab
+
+    - name: Attendre la generation du mot de passe root initial
+      shell: docker exec gitlab test -f /etc/gitlab/initial_root_password
+      register: password_file
+      retries: 60
+      delay: 1
+      until: password_file.rc == 0
+
+    - name: Lire le mot de passe root
+      shell: docker exec gitlab grep 'Password:' /etc/gitlab/initial_root_password | awk '{print $2}'
+      register: root_password
+      changed_when: false
+
+    - name: Afficher les infos d'acces GitLab
+      debug:
+        msg:
+          - "🌐 Acces : http://{{ ip_result.stdout.split()[0] }}"
+          - "👤 Utilisateur : root"
+          - "🔑 Mot de passe : {{ root_password.stdout }}"
