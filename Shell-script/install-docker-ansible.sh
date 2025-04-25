@@ -1,31 +1,22 @@
 #!/bin/bash
 
-# Chemin absolu vers le dossier Ansible
+# Résout le chemin absolu du dossier Ansible-script
 ANSIBLE_DIR="$(cd "$(dirname "$0")/../Ansible-script" && pwd)"
 
-# Nom de l'image personnalisée
-IMAGE_NAME="my-ansible-env"
+# Nom de l'image à utiliser
+IMAGE_NAME="willhallonline/ansible:latest"
 
-# Création d’un Dockerfile si absent
-DOCKERFILE_PATH="$(dirname "$0")/Dockerfile"
-if [ ! -f "$DOCKERFILE_PATH" ]; then
-  echo "[INFO] Création du Dockerfile personnalisé..."
-  cat > "$DOCKERFILE_PATH" <<EOF
-FROM cytopia/ansible:latest
-
-RUN apk update && apk add openssh nano bash
-EOF
+# Vérifie si l’image existe localement, sinon la télécharge
+if ! docker image inspect "$IMAGE_NAME" >/dev/null 2>&1; then
+  echo "[INFO] 🔽 Téléchargement de l’image $IMAGE_NAME..."
+  docker pull "$IMAGE_NAME"
 fi
 
-# Build de l’image Docker
-echo "[INFO] Construction de l'image Docker '$IMAGE_NAME'..."
-docker build -t "$IMAGE_NAME" "$(dirname "$0")"
-
-# Lancement du conteneur Ansible
-echo "[INFO] Lancement du conteneur Docker avec Ansible..."
+# Lancement du conteneur Ansible prêt à l'emploi
+echo "[INFO] 🚀 Lancement du conteneur Ansible avec SSH, Bash, etc."
 docker run -it --rm \
   --name ansible-gitlab \
   -v "$ANSIBLE_DIR":/ansible \
-  -v "/home/adminit/.ssh/id_ed25519":/root/.ssh/id_ed25519:ro \
+  -v "$HOME/.ssh/id_ed25519":/root/.ssh/id_ed25519:ro \
   -w /ansible \
-  "$IMAGE_NAME" /bin/sh
+  "$IMAGE_NAME" /bin/bash
