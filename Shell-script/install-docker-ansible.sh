@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Dossier contenant tes fichiers ansible
-ANSIBLE_DIR="../Ansible-script/"
+ANSIBLE_DIR="$(cd "$(dirname "$0")/../Ansible-script" && pwd)"
 
 docker run -it --rm \
   --name ansible-gitlab \
