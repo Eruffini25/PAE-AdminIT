@@ -1,16 +1,24 @@
 [all:vars]
 # Ne pas toucher !
 ansible_user=adminit
-ansible_ssh_private_key_file=/home/adminit/.ssh/id_ed25519
+ansible_ssh_private_key_file=/root/.ssh/id_ed25519
 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
 [gitlabce]
-# ip machine gitlab
-10.0.1.152
+# ip machine gitlab ce
+x.x.x.x
 
-[gitlabce:vars]
-# hostname et ip voulu 
-new_hostname=SLTFR01-SFTP
-static_ip=10.0.1.20/24
+[gitlabrunner]
+# ip machine gitlab runner
+x.x.x.x
+
+[gitlabrunner:vars]
+#information pour register runner
+# ip gitlab ce
+gitlab_url=http://192.168.192.143:8080
+# Token de registration
+registration_token=ABC123TOKEN
+# Tag du runner (par defaut laisser debian-runner)
+runner_tags=debian-runner
 
 # Si erreur sudo "--ask-become-pass"
