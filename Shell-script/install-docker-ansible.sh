@@ -8,5 +8,5 @@ docker run -it --rm \
   -v "$ANSIBLE_DIR":/ansible \
   -v "/home/adminit/.ssh/id_ed25519":/root/.ssh:ro \
   -w /ansible \
-  cytopia/ansible:latest /bin/bash
+  cytopia/ansible:latest /bin/sh
   
