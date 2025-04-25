@@ -13,10 +13,10 @@ if ! docker image inspect "$IMAGE_NAME" >/dev/null 2>&1; then
 fi
 
 # Lancement du conteneur Ansible prêt à l'emploi
-echo "[INFO] 🚀 Lancement du conteneur Ansible avec SSH, Bash, etc."
+echo "[INFO] 🚀 Lancement du conteneur Ansible avec SSH, Sh, etc."
 docker run -it --rm \
   --name ansible-gitlab \
   -v "$ANSIBLE_DIR":/ansible \
   -v "$HOME/.ssh/id_ed25519":/root/.ssh/id_ed25519:ro \
   -w /ansible \
-  "$IMAGE_NAME" /bin/bash
+  "$IMAGE_NAME" /bin/sh
