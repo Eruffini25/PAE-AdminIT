@@ -8,9 +8,9 @@ ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 # ip machine gitlab ce
 x.x.x.x
 
-[gitlabrunner]
+#[gitlabrunner]
 # ip machine gitlab runner
-x.x.x.x
+#x.x.x.x
 
 [gitlabrunner:vars]
 #information pour register runner
