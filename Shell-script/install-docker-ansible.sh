@@ -41,9 +41,11 @@ docker pull willhallonline/ansible:latest
 
 # Lancer Ansible via Docker
 echo "$INFO 🚀 Lancement du conteneur Ansible et exécution du playbook..."
-docker run --rm -it \
-  -v "$PWD":/ansible \
+docker run -it --rm \
+  --name ansible-gitlab \
+  -v "$ANSIBLE_DIR":/ansible \
+  -v "$HOME/.ssh/id_ed25519":/root/.ssh/id_ed25519:ro \
   -w /ansible \
   willhallonline/ansible:latest \
-  ansible-playbook -i "$INVENTORY_FILE_SERV" deploy-gitlab-ce.yml
+  ansible-playbook -i "$INVENTORY_FILE" deploy-gitlab-ce.yml
 
