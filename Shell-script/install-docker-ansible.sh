@@ -28,12 +28,7 @@ if ! grep -q "^\[gitlabce\]" "$INVENTORY_FILE_SERV"; then
   echo -e "\n[gitlabce]" >> "$INVENTORY_FILE_SERV"
 fi
 
-# Supprimer une ancienne IP si présente
-sed -i "/^[0-9]\{1,3\}\(\.[0-9]\{1,3\}\)\{3\}$/d" "$INVENTORY_FILE_SERV"
-
-# Ajouter la nouvelle IP
-echo "$IP_GITLAB" >> "$INVENTORY_FILE_SERV"
-echo "$INFO $OK Fichier $INVENTORY_FILE_SERV mis à jour avec l'IP $IP_GITLAB"
+echo $IP_GITLAB >> "$INVENTORY_FILE_SERV"
 
 # Télécharger l'image Ansible Docker si besoin
 echo "$INFO 🔽 Téléchargement de l’image willhallonline/ansible:latest..."
