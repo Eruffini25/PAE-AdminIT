@@ -40,6 +40,8 @@ echo "gitlab_url=http://$GITLAB_IP" >> tmp_inventory
 echo "registration_token=$TOKEN" >> tmp_inventory
 echo "runner_tags=$RUNNER_TAG" >> tmp_inventory
 
+cat $INVENTORY_FILE
+
 # Remplacement du fichier final
 mv tmp_inventory "$INVENTORY_FILE"
 rm -f tmp_inventory_1
