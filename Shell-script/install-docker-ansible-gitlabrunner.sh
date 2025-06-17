@@ -9,7 +9,7 @@ ERR="❌"
 ANSIBLE_DIR="$(cd "$(dirname "$0")/../Ansible-script" && pwd)"
 
 # Chemin du fichier inventory
-INVENTORY_FILE="inventory-runner"
+INVENTORY_FILE="$ANSIBLE_DIR/inventory-runner"
 
 
 # Vérifie que le fichier existe
