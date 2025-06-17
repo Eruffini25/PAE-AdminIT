@@ -20,9 +20,8 @@
           --url "{{ gitlab_url }}" \
           --token "{{ registration_token }}" \
           --executor docker \
-          --docker-image "{{ runner_image }}" \
-          --description "{{ runner_description }}" \
-          --tag-list "{{ runner_tags }}"
+          --docker-image "{{ runner_image }}"
+
 
 
     - name: Attendre la creation du fichier config.toml
