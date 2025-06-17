@@ -12,25 +12,18 @@
         state: directory
         recurse: yes
 
-    - name: Enregistrer le GitLab Runner
-      docker_container:
-        name: gitlab-runner-register
-        image: gitlab/gitlab-runner
-        state: started
-        command: >
-          register
-          --non-interactive
-          --url {{ gitlab_url }}
-          --token {{ registration_token }}
-          --executor docker
-          --docker-image {{ runner_image }}
-          --description {{ runner_description }}
-          --tag-list {{ runner_tags }}
-        volumes:
-          - /srv/gitlab-runner/config:/etc/gitlab-runner
-        auto_remove: true
-        interactive: true
-        tty: true
+    - name: Enregistrer le GitLab Runner (via docker CLI)
+      shell: |
+        docker run --rm -v /srv/gitlab-runner/config:/etc/gitlab-runner \
+          gitlab/gitlab-runner register \
+          --non-interactive \
+          --url "{{ gitlab_url }}" \
+          --token "{{ registration_token }}" \
+          --executor docker \
+          --docker-image "{{ runner_image }}" \
+          --description "{{ runner_description }}" \
+          --tag-list "{{ runner_tags }}"
+
 
     - name: Attendre la creation du fichier config.toml
       wait_for:
