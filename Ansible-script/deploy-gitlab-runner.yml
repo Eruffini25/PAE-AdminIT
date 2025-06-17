@@ -28,7 +28,7 @@
           --tag-list {{ runner_tags }}
         volumes:
           - /srv/gitlab-runner/config:/etc/gitlab-runner
-        autoremove: true
+        auto_remove: true
         interactive: true
         tty: true
 
